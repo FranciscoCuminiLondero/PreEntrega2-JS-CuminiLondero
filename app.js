@@ -46,7 +46,15 @@ while (seguirComprando) {
     }
 
     // Solicita al usuario que seleccione un servicio
-    let indiceServicio = parseInt(prompt("Ingrese el número del servicio que desea agregar al carrito:")) - 1;
+    let indiceServicio = prompt(`Ingrese el número del servicio que desea agregar al carrito, o ingrese 0 para salir:`);
+
+    if (indiceServicio === "0") {
+        seguirComprando = false;
+        break;
+    }
+    while (isNaN(indiceServicio) || indiceServicio < 1 || indiceServicio > serviceList.length) {
+        indiceServicio = parseInt(prompt(`Ingreso inválido. Ingrese el número del servicio que desea agregar al carrito (1-${serviceList.length}):`));
+    }
 
     // Agrega el servicio al carrito
     let servicioSeleccionado = serviceList[indiceServicio];
@@ -63,6 +71,9 @@ while (seguirComprando) {
 
     // Solicita al usuario que continúe comprando
     let entradaUsuario = prompt("¿Desea continuar comprando? (S/N)").toUpperCase();
+    while (entradaUsuario !== "S" && entradaUsuario !== "N") {
+        entradaUsuario = prompt("Ingreso inválido. ¿Desea continuar comprando? (S/N)").toUpperCase();
+    }
     seguirComprando = entradaUsuario === "S" ? true : false;
 }
 
@@ -74,10 +85,16 @@ let seguirEliminando = true;
 let entradaUsuario = prompt("¿Desea eliminar elementos del carrito? (S/N)").toUpperCase();
 if (entradaUsuario === "S") {
     while (seguirEliminando) {
-        let indiceServicio = parseInt(prompt("Ingrese el número del servicio que desea eliminar:"));
+        let indiceServicio = parseInt(prompt(`Ingrese el número del servicio que desea eliminar (1-${cart.items.length}):`));
+        while (isNaN(indiceServicio) || indiceServicio < 1 || indiceServicio > cart.items.length) {
+            indiceServicio = parseInt(prompt(`Ingreso inválido. Ingrese el número del servicio que desea eliminar (1-${cart.items.length}):`));
+        }
         cart.removeItem(indiceServicio);
         cart.displayCart();
-        entradaUsuario = prompt("¿Desea seguir eliminando servicios? (S/N)").toUpperCase();
+        let entradaUsuario = prompt("¿Desea seguir eliminando servicios? (S/N)").toUpperCase();
+        while (entradaUsuario !== "S" && entradaUsuario !== "N") {
+            entradaUsuario = prompt("Ingreso inválido. ¿Desea seguir eliminando servicios? (S/N)").toUpperCase();
+        }
         seguirEliminando = entradaUsuario === "S" ? true : false;
     }
 } else {
