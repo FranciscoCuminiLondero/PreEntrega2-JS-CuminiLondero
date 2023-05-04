@@ -7,8 +7,9 @@ const cart = {
         this.total += service.price;
     },
     removeItem: function (index) {
-        this.total -= this.items[index].price;
-        this.items.splice(index, 1);
+        const realIndex = index - 1; // resta 1 para obtener el índice real
+        this.total -= this.items[realIndex].price;
+        this.items.splice(realIndex, 1);
     },
     displayCart: function () {
         console.log("Carrito de compras:");
